@@ -1,0 +1,77 @@
+[gd_scene load_steps=7 format=2]
+
+[ext_resource path="res://Experimental/MoveRangeHiglight.tscn" type="PackedScene" id=1]
+[ext_resource path="res://Resources/tilesheet_complete.png" type="Texture" id=2]
+[ext_resource path="res://Experimental/PathShower.gd" type="Script" id=3]
+
+[sub_resource type="Curve2D" id=2]
+_data = {
+"points": PoolVector2Array(  )
+}
+
+[sub_resource type="Animation" id=3]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/path = NodePath("StartingPosition/PathFollow2D:unit_offset")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 0,
+"values": [ 0.0 ]
+}
+
+[sub_resource type="Animation" id=1]
+resource_name = "move"
+tracks/0/type = "value"
+tracks/0/path = NodePath("StartingPosition/PathFollow2D:unit_offset")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0, 1 ),
+"transitions": PoolRealArray( 1, 1 ),
+"update": 0,
+"values": [ 0.0, 1.0 ]
+}
+
+[node name="PathShower" type="Navigation2D"]
+script = ExtResource( 3 )
+
+[node name="Path" type="Line2D" parent="."]
+
+[node name="StartingPosition" type="Path2D" parent="."]
+position = Vector2( 200, 60 )
+curve = SubResource( 2 )
+
+[node name="PathFollow2D" type="PathFollow2D" parent="StartingPosition"]
+rotate = false
+
+[node name="TilesheetComplete" type="Sprite" parent="StartingPosition/PathFollow2D"]
+texture = ExtResource( 2 )
+region_enabled = true
+region_rect = Rect2( 1295, 719, 34, 34 )
+
+[node name="MoveRangeHiglight" parent="." instance=ExtResource( 1 )]
+bake_navigation = true
+tile_data = PoolIntArray( 1, 0, 7, 2, 0, 196612, 3, 0, 196612, 4, 0, 196612, 5, 0, 196612, 6, 0, 196612, 7, 0, 196612, 8, 0, 8, 65537, 0, 131076, 65538, 0, 131078, 65539, 0, 131078, 65540, 0, 131072, 65541, 0, 196613, 65542, 0, 131073, 65543, 0, 131078, 65544, 0, 196608, 65545, 0, 8, 131073, 0, 131076, 131074, 0, 131078, 131075, 0, 131078, 131076, 0, 131077, 131078, 0, 131076, 131079, 0, 131078, 131080, 0, 131078, 131081, 0, 131077, 196609, 0, 65543, 196610, 0, 131073, 196611, 0, 131078, 196612, 0, 196608, 196613, 0, 196612, 196614, 0, 196609, 196615, 0, 131078, 196616, 0, 131078, 196617, 0, 131077, 262146, 0, 65543, 262147, 0, 131073, 262148, 0, 131078, 262149, 0, 131078, 262150, 0, 131078, 262151, 0, 131078, 262152, 0, 131078, 262153, 0, 131077, 327683, 0, 65543, 327684, 0, 196613, 327685, 0, 196613, 327686, 0, 196613, 327687, 0, 196613, 327688, 0, 196613, 327689, 0, 65544 )
+
+[node name="EndPosition" type="Position2D" parent="."]
+position = Vector2( 148, 172 )
+
+[node name="TilesheetComplete" type="Sprite" parent="EndPosition"]
+modulate = Color( 1, 1, 1, 0.329412 )
+scale = Vector2( 1.4, 1.4 )
+texture = ExtResource( 2 )
+region_enabled = true
+region_rect = Rect2( 1550, 270, 36, 36 )
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+anims/RESET = SubResource( 3 )
+anims/move = SubResource( 1 )
+
+[connection signal="animation_finished" from="AnimationPlayer" to="." method="_on_AnimationPlayer_animation_finished"]
