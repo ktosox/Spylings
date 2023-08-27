@@ -8,18 +8,20 @@ extends Node2D
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
-	print($Rooms.get_rooms_connected_to_window($DoorsWindows/Door) )
 
-	pass # Replace with function body.
-
-func fog_update(roomIDs:Array):
-	var newWhiteCells = []
+	var roomSpace = []
+	for R in $Rooms.get_rooms_connected_to_window($DoorsWindows/Window): 
+		roomSpace.append_array($Rooms.allRooms[R])
+	$FogOfWar.update_fog(roomSpace)
+	roomSpace.clear()
 	
-	for R in roomIDs:
-		var nextRoom = $Rooms.get_room_cells(roomIDs)
-		newWhiteCells.append_array(nextRoom)
-	$FogOfWar.update_fog(newWhiteCells)
-	pass
+	for R in $Rooms.get_rooms_connected_to_window($DoorsWindows/Door2): 
+		roomSpace.append_array($Rooms.allRooms[R])
+
+	$FogOfWar.update_fog(roomSpace)
+
+
+
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 #func _process(delta):
 #	pass
