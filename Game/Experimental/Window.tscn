@@ -1,0 +1,19 @@
+[gd_scene load_steps=2 format=2]
+
+[sub_resource type="RectangleShape2D" id=1]
+extents = Vector2( 96, 96 )
+
+[node name="Window" type="Area2D"]
+
+[node name="Line2D" type="Line2D" parent="."]
+position = Vector2( 0, 27 )
+points = PoolVector2Array( -32, 0, 32, 0 )
+default_color = Color( 0.4, 0.501961, 1, 0.784314 )
+
+[node name="Line2D2" type="Line2D" parent="."]
+position = Vector2( 0, -27 )
+points = PoolVector2Array( -32, 0, 32, 0 )
+default_color = Color( 0.4, 0.501961, 1, 0.784314 )
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+shape = SubResource( 1 )

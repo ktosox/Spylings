@@ -2,15 +2,15 @@
 
 importer="texture"
 type="StreamTexture"
-path="res://.import/C_Run_SOUTH_strip4.png-9f88606c1a125494735866d4b168f20c.stex"
+path="res://.import/BlankTile.png-1051c7ddcba4779e86d4c84f97f5d47b.stex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://Resources/Agent Free Version/Run/C_Run_SOUTH_strip4.png"
-dest_files=[ "res://.import/C_Run_SOUTH_strip4.png-9f88606c1a125494735866d4b168f20c.stex" ]
+source_file="res://Resources/BlankTile.png"
+dest_files=[ "res://.import/BlankTile.png-1051c7ddcba4779e86d4c84f97f5d47b.stex" ]
 
 [params]
 
@@ -20,7 +20,7 @@ compress/hdr_mode=0
 compress/bptc_ldr=0
 compress/normal_map=0
 flags/repeat=0
-flags/filter=false
+flags/filter=true
 flags/mipmaps=false
 flags/anisotropic=false
 flags/srgb=2
