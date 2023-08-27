@@ -1,9 +1,8 @@
 extends TileMap
 
 
-# Declare member variables here. Examples:
-# var a = 2
-# var b = "text"
+
+
 var allRooms = {}
 
 # Called when the node enters the scene tree for the first time.
@@ -26,7 +25,7 @@ func _ready():
 		allRooms[roomID] = seedCell
 		roomID += 1
 	# take one and detect all cells it touches
-	print(allRooms)
+
 	# assign all cells to the room
 	
 	# remove all detected cells from list
@@ -34,6 +33,26 @@ func _ready():
 	# reapeat
 
 	pass # Replace with function body.
+
+func get_rooms_connected_to_window(window:Node2D):
+	var rooms = []
+	for X in [-64,0,64] :
+		for Y in [-64,0,64] :
+			var result = room_from_point(window.global_position + Vector2(X,Y))
+			if result != null:
+				if !rooms.has(result):
+					rooms.push_front(result)
+			
+	return rooms
+
+func room_from_point(point):
+	var target_cell = world_to_map(to_local(point) )
+	for R in allRooms.keys():
+		if allRooms[R].has(target_cell) : 
+			return R
+	return null
+	pass
+
 
 func all_touching_cells(checkedCells:Array, nextCells:Array):
 	
