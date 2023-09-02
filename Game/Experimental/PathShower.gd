@@ -1,12 +1,14 @@
 extends Navigation2D
 
-
+var stepMarkerScene = preload("res://Experimental/StepMarker.tscn")
 # Declare member variables here. Examples:
 # var a = 2
 # var b = "text"
-var lockPath = false
+export var lockPath = false
 
 var finalPath = Curve2D.new()
+
+var stepLimit = 3
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
@@ -18,6 +20,10 @@ func _ready():
 func ceneter_from_global(globalPos):
 	var localPos = to_local(globalPos)
 	return $MoveRangeHiglight.world_to_map(localPos) * $MoveRangeHiglight.cell_size + ($MoveRangeHiglight.cell_size/2)
+
+func get_curve():
+	return finalPath
+	pass
 
 func update_path():
 	$Path.clear_points()
@@ -43,34 +49,28 @@ func _process(delta):
 	pass
 
 func add_step():
-	var newStep = $StepMarker.duplicate()
-	add_child_below_node($StepMarker,newStep)
-	for P in get_simple_path($StartingPosition.global_position,ceneter_from_global(get_global_mouse_position())):
-		finalPath.add_point(P)
-	newStep.global_position = $EndPosition.global_position
-	$StartingPosition.global_position = $EndPosition.global_position
-	$FinalPath.points = finalPath.get_baked_points()
-	pass
-
-func play_path():
-	lockPath = true
-	$AnimationPlayer.playback_speed = 200 / $StartingPosition.curve.get_baked_length()
-	$AnimationPlayer.play("move")
-	pass
-
-func _input(event:InputEvent):
-	if event.is_pressed() and event.is_class("InputEventMouseButton") :
-		add_step()
-		# add next step
-		
+	
+	if get_tree().get_nodes_in_group("Step").size() <= stepLimit :
+			
+		var newStep = stepMarkerScene.instance()
+		add_child(newStep)
+		for P in get_simple_path($StartingPosition.global_position,ceneter_from_global(get_global_mouse_position())):
+			finalPath.add_point(P)
+		newStep.global_position = $EndPosition.global_position
+		$StartingPosition.global_position = $EndPosition.global_position
+		$FinalPath.points = finalPath.get_baked_points()
 		pass
-#
-#		$AnimationPlayer.playback_speed = 200 / $StartingPosition.curve.get_baked_length()
-#
 
 
-func _on_AnimationPlayer_animation_finished(anim_name):
-	$StartingPosition.global_position = $StartingPosition/PathFollow2D.global_position
+
+func reset_path():
+	for S in get_tree().get_nodes_in_group("Step"):
+		S.queue_free()
+	var startingStep = stepMarkerScene.instance()
+	add_child(startingStep)
+	$StartingPosition.global_position = finalPath.get_point_position(finalPath.get_point_count()-1)
+	startingStep.position = $StartingPosition.position
+	finalPath = Curve2D.new()
 	snap_start()
-	$StartingPosition/PathFollow2D.unit_offset = 0
-	pass # Replace with function body.
+	$FinalPath.clear_points()
+	pass

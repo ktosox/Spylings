@@ -1,8 +1,9 @@
-[gd_scene load_steps=9 format=2]
+[gd_scene load_steps=8 format=2]
 
 [ext_resource path="res://Experimental/MoveRangeHiglight.tscn" type="PackedScene" id=1]
 [ext_resource path="res://Resources/tilesheet_complete.png" type="Texture" id=2]
 [ext_resource path="res://Experimental/PathShower.gd" type="Script" id=3]
+[ext_resource path="res://Experimental/StepMarker.tscn" type="PackedScene" id=4]
 
 [sub_resource type="Animation" id=4]
 resource_name = "New Anim"
@@ -53,37 +54,7 @@ _data = {
 "points": PoolVector2Array(  )
 }
 
-[sub_resource type="Animation" id=3]
-length = 0.001
-tracks/0/type = "value"
-tracks/0/path = NodePath("StartingPosition/PathFollow2D:unit_offset")
-tracks/0/interp = 1
-tracks/0/loop_wrap = true
-tracks/0/imported = false
-tracks/0/enabled = true
-tracks/0/keys = {
-"times": PoolRealArray( 0 ),
-"transitions": PoolRealArray( 1 ),
-"update": 0,
-"values": [ 0.0 ]
-}
-
-[sub_resource type="Animation" id=1]
-resource_name = "move"
-tracks/0/type = "value"
-tracks/0/path = NodePath("StartingPosition/PathFollow2D:unit_offset")
-tracks/0/interp = 1
-tracks/0/loop_wrap = true
-tracks/0/imported = false
-tracks/0/enabled = true
-tracks/0/keys = {
-"times": PoolRealArray( 0, 1 ),
-"transitions": PoolRealArray( 1, 1 ),
-"update": 0,
-"values": [ 0.0, 1.0 ]
-}
-
-[node name="PathShower" type="Navigation2D"]
+[node name="PathPreview" type="Navigation2D"]
 script = ExtResource( 3 )
 
 [node name="FinalPath" type="Line2D" parent="."]
@@ -98,10 +69,7 @@ autoplay = "New Anim"
 "anims/New Anim" = SubResource( 4 )
 anims/RESET = SubResource( 5 )
 
-[node name="StepMarker" type="Sprite" parent="."]
-texture = ExtResource( 2 )
-region_enabled = true
-region_rect = Rect2( 1560, 408, 16, 16 )
+[node name="StepMarker" parent="." instance=ExtResource( 4 )]
 
 [node name="Path" type="Line2D" parent="."]
 
@@ -129,9 +97,3 @@ scale = Vector2( 1.4, 1.4 )
 texture = ExtResource( 2 )
 region_enabled = true
 region_rect = Rect2( 1550, 270, 36, 36 )
-
-[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
-anims/RESET = SubResource( 3 )
-anims/move = SubResource( 1 )
-
-[connection signal="animation_finished" from="AnimationPlayer" to="." method="_on_AnimationPlayer_animation_finished"]
