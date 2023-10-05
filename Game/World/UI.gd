@@ -18,7 +18,7 @@ func _ready():
 
 
 
-func _on_Control_gui_input(event:InputEvent):
-	if event.is_pressed() and event.is_class("InputEventMouseButton"):
-		$"../PathPreview".add_step()
-	pass # Replace with function body.
+#func _on_Control_gui_input(event:InputEvent):
+#	if event.is_pressed() and event.is_class("InputEventMouseButton"):
+#		$"../PathPreview".add_step()
+#	pass # Replace with function body.

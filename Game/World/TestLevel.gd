@@ -33,16 +33,7 @@ func _on_Window_area_entered(area):
 	pass # Replace with function body.
 
 
-func _on_MoveAnimation_animation_finished(anim_name):
-	$PlayerMover.global_position = $PlayerMover/PathFollow2D.global_position
-	$PlayerMover/PathFollow2D.unit_offset = 0
-	$PathPreview.lockPath = false
-	$PathPreview.reset_path()
-	pass # Replace with function body.
-
 
 func _on_Button_pressed():
-	$PlayerMover.curve = $PathPreview.get_curve()
-	$PathPreview.lockPath = true
-	$PlayerMover/MoveAnimation.play("move")
+
 	pass # Replace with function body.
