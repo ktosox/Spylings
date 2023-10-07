@@ -12,14 +12,14 @@ var stepLimit = 3
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
-
-	snap_start()
+	$NavigationAgent2D.set_navigation(self)
+#	snap_start()
 	
 	pass # Replace with function body.
 
-func ceneter_from_global(globalPos):
-	var localPos = to_local(globalPos)
-	return $MoveRangeHiglight.world_to_map(localPos) * $MoveRangeHiglight.cell_size + ($MoveRangeHiglight.cell_size/2)
+#func ceneter_from_global(globalPos):
+#	var localPos = to_local(globalPos)
+#	return $MoveRangeHiglight.world_to_map(localPos) * $MoveRangeHiglight.cell_size + ($MoveRangeHiglight.cell_size/2)
 
 func get_curve():
 	return finalPath
@@ -30,7 +30,7 @@ func update_path():
 	$StartingPosition.curve.clear_points()
 
 	#$Path.add_point($StartingPosition.global_position)
-	for P in get_simple_path($StartingPosition.global_position,ceneter_from_global(get_global_mouse_position())):
+	for P in $NavigationAgent2D.get_nav_path():
 		$StartingPosition.curve.add_point(P - $StartingPosition.global_position)
 		$Path.add_point(P)
 	#$Path.add_point( ceneter_from_global(get_global_mouse_position() - $Path.global_position))
@@ -38,15 +38,15 @@ func update_path():
 	$EndPosition.global_position = $Path.points[$Path.points.size()-1]
 	pass
 
-func snap_start():
-	$StartingPosition.global_position = ceneter_from_global($StartingPosition.global_position)
-	$StartingPosition/PathFollow2D.global_position = $StartingPosition.global_position
+#func snap_start():
+#	$StartingPosition.global_position = ceneter_from_global($StartingPosition.global_position)
+#	$StartingPosition/PathFollow2D.global_position = $StartingPosition.global_position
 # Called every frame. 'delta' is the elapsed time since the previous frame.
-func _process(delta):
-	if !lockPath:
-		update_path()
-	
-	pass
+#func _process(delta):
+#	if !lockPath:
+#		update_path()
+#
+#	pass
 
 func add_step():
 	
@@ -54,14 +54,23 @@ func add_step():
 			
 		var newStep = stepMarkerScene.instance()
 		add_child(newStep)
-		for P in get_simple_path($StartingPosition.global_position,ceneter_from_global(get_global_mouse_position())):
+		for P in $NavigationAgent2D.get_nav_path():
 			finalPath.add_point(P)
 		newStep.global_position = $EndPosition.global_position
 		$StartingPosition.global_position = $EndPosition.global_position
 		$FinalPath.points = finalPath.get_baked_points()
 		pass
 
+func _input(event):
+	if event.is_class("InputEventMouseButton") and event.is_pressed():
+		print("click")
+		$NavigationAgent2D.set_target_location(get_global_mouse_position())
+		print($NavigationAgent2D.get_next_location())
+		if $NavigationAgent2D.get_nav_path().size()>0:
+			update_path()
 
+
+		
 
 func reset_path():
 	for S in get_tree().get_nodes_in_group("Step"):
@@ -71,6 +80,6 @@ func reset_path():
 	$StartingPosition.global_position = finalPath.get_point_position(finalPath.get_point_count()-1)
 	startingStep.position = $StartingPosition.position
 	finalPath = Curve2D.new()
-	snap_start()
+#	snap_start()
 	$FinalPath.clear_points()
 	pass

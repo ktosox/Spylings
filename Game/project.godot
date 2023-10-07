@@ -13,9 +13,15 @@ _global_script_classes=[ {
 "class": "AgentPath",
 "language": "GDScript",
 "path": "res://Experimental/AgentPath.gd"
+}, {
+"base": "Resource",
+"class": "Command",
+"language": "GDScript",
+"path": "res://Experimental/Command.gd"
 } ]
 _global_script_class_icons={
-"AgentPath": ""
+"AgentPath": "",
+"Command": ""
 }
 
 [application]

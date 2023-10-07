@@ -1,10 +1,9 @@
-[gd_scene load_steps=8 format=2]
+[gd_scene load_steps=10 format=2]
 
-[ext_resource path="res://Experimental/MoveRangeHiglight.tscn" type="PackedScene" id=1]
 [ext_resource path="res://Resources/tilesheet_complete.png" type="Texture" id=2]
 [ext_resource path="res://Experimental/PathShower.gd" type="Script" id=3]
 [ext_resource path="res://Experimental/StepMarker.tscn" type="PackedScene" id=4]
-
+[ext_resource path="res://icon.png" type="Texture" id=5]
 
 [sub_resource type="Animation" id=4]
 resource_name = "New Anim"
@@ -55,7 +54,18 @@ _data = {
 "points": PoolVector2Array(  )
 }
 
+[sub_resource type="NavigationPolygon" id=6]
+vertices = PoolVector2Array( 195, 257, 332, 149, 470, 133, 319, 381, 46, 531, -6, 363, -119, 416, -67, -47, 96, -150, 169, 94, 305, 548 )
+polygons = [ PoolIntArray( 0, 1, 2, 3, 4 ), PoolIntArray( 5, 6, 7, 8, 9, 0 ), PoolIntArray( 3, 10, 4 ), PoolIntArray( 5, 0, 4 ) ]
+outlines = [ PoolVector2Array( -67, -47, -119, 416, -6, 363, 46, 531, 305, 548, 319, 381, 470, 133, 332, 149, 195, 257, 169, 94, 96, -150 ) ]
+
+[sub_resource type="NavigationPolygon" id=7]
+vertices = PoolVector2Array( 790, 443, 459, 540, 515, 126, 665, 20, 223, 16, 257, 166 )
+polygons = [ PoolIntArray( 0, 1, 2, 3 ), PoolIntArray( 4, 3, 2, 5 ) ]
+outlines = [ PoolVector2Array( 223, 16, 257, 166, 515, 126, 459, 540, 790, 443, 665, 20 ) ]
+
 [node name="PathPreview" type="Navigation2D"]
+edge_connection_margin = 8.0
 script = ExtResource( 3 )
 
 [node name="FinalPath" type="Line2D" parent="."]
@@ -85,10 +95,6 @@ texture = ExtResource( 2 )
 region_enabled = true
 region_rect = Rect2( 1295, 719, 34, 34 )
 
-[node name="MoveRangeHiglight" parent="." instance=ExtResource( 1 )]
-bake_navigation = true
-tile_data = PoolIntArray( -1, 0, 7, -65536, 0, 196612, -65535, 0, 196612, -65534, 0, 196612, -65533, 0, 196612, -65532, 0, 196612, -65531, 0, 8, 65535, 0, 131076, 0, 0, 131078, 1, 0, 131078, 2, 0, 131078, 3, 0, 131078, 4, 0, 131078, 5, 0, 196608, 6, 0, 196612, 7, 0, 196612, 8, 0, 8, 131071, 0, 131076, 65536, 0, 131078, 65537, 0, 131078, 65538, 0, 131078, 65539, 0, 131078, 65540, 0, 131078, 65541, 0, 131078, 65542, 0, 131078, 65543, 0, 131078, 65544, 0, 196608, 65545, 0, 196612, 65546, 0, 8, 196607, 0, 131076, 131072, 0, 131078, 131073, 0, 131078, 131074, 0, 131078, 131075, 0, 131078, 131076, 0, 131078, 131077, 0, 131078, 131078, 0, 131078, 131079, 0, 131078, 131080, 0, 131078, 131081, 0, 131078, 131082, 0, 131077, 262143, 0, 131076, 196608, 0, 131078, 196609, 0, 131078, 196610, 0, 131078, 196611, 0, 131078, 196612, 0, 131078, 196613, 0, 131078, 196614, 0, 131078, 196615, 0, 131078, 196616, 0, 131078, 196617, 0, 131078, 196618, 0, 131077, 327679, 0, 131076, 262144, 0, 131078, 262145, 0, 131078, 262146, 0, 131078, 262147, 0, 131078, 262148, 0, 131078, 262149, 0, 131078, 262150, 0, 131078, 262151, 0, 131078, 262152, 0, 131078, 262153, 0, 131078, 262154, 0, 131077, 393215, 0, 65543, 327680, 0, 196613, 327681, 0, 131073, 327682, 0, 131078, 327683, 0, 131078, 327684, 0, 131078, 327685, 0, 131078, 327686, 0, 131078, 327687, 0, 131078, 327688, 0, 131078, 327689, 0, 131078, 327690, 0, 131077, 393217, 0, 65543, 393218, 0, 131073, 393219, 0, 131078, 393220, 0, 131078, 393221, 0, 131078, 393222, 0, 131078, 393223, 0, 131078, 393224, 0, 131078, 393225, 0, 131078, 393226, 0, 131077, 458754, 0, 65543, 458755, 0, 196613, 458756, 0, 196613, 458757, 0, 196613, 458758, 0, 196613, 458759, 0, 196613, 458760, 0, 196613, 458761, 0, 196613, 458762, 0, 65544 )
-
 [node name="EndPosition" type="Position2D" parent="."]
 position = Vector2( 148, 172 )
 
@@ -98,3 +104,15 @@ scale = Vector2( 1.4, 1.4 )
 texture = ExtResource( 2 )
 region_enabled = true
 region_rect = Rect2( 1550, 270, 36, 36 )
+
+[node name="NavigationAgent2D" type="NavigationAgent2D" parent="."]
+
+[node name="Icon" type="Sprite" parent="NavigationAgent2D"]
+texture = ExtResource( 5 )
+
+[node name="NavigationPolygonInstance" type="NavigationPolygonInstance" parent="."]
+navpoly = SubResource( 6 )
+
+[node name="NavigationPolygonInstance2" type="NavigationPolygonInstance" parent="."]
+position = Vector2( 19, -8 )
+navpoly = SubResource( 7 )

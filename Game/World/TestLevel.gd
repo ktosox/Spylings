@@ -22,18 +22,21 @@ func _ready():
 
 
 
-# Called every frame. 'delta' is the elapsed time since the previous frame.
-#func _process(delta):
-#	pass
-
 func player_triggered_fog_update(area:Area2D):
+	var newCells = []
+	for A in $Rooms.get_rooms_connected_to_window(area):
+		newCells.append_array($Rooms.allRooms[A])
+	$FogOfWar.update_fog(newCells)
 	pass
 
-func _on_Window_area_entered(area):
-	pass # Replace with function body.
 
 
 
 func _on_Button_pressed():
 
 	pass # Replace with function body.
+
+
+
+#	print()
+#	
