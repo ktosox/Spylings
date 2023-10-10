@@ -23,8 +23,11 @@ func hide_options():
 	pass
 
 
+
+
+
 func _on_ClickDetector_input_event(viewport, event, shape_idx):
-	if event.is_class("InputEventMouseButton") and event.is_pressed():
+	if event.is_action_pressed("RMB"):
 		show_options()
 		pass
 	pass # Replace with function body.

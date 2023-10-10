@@ -108,6 +108,7 @@ region_rect = Rect2( 1550, 270, 36, 36 )
 [node name="NavigationAgent2D" type="NavigationAgent2D" parent="."]
 
 [node name="Icon" type="Sprite" parent="NavigationAgent2D"]
+visible = false
 texture = ExtResource( 5 )
 
 [node name="NavigationPolygonInstance" type="NavigationPolygonInstance" parent="."]
